@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
+app.get('/index', (req, res) => {
+  res.render('index')
+});
+
 //this adds all the userRoutes to the app under the path /user
 app.use('/user', userRoutes);
 
