@@ -6,15 +6,31 @@ BEGIN TRANSACTION;
 
 --create your tables with SQL commands here (watch out for slight syntactical differences with SQLite)
 
+
 CREATE TABLE IF NOT EXISTS Users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    password TEXT NOT NULL
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    is_author INTEGER DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS UserRecords (
-    record_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    record_value TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS Articles (
+    article_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(255) NOT NULL,
+    subtitle VARCHAR(255),
+    content TEXT NOT NULL,
+    publication_date CURRENT_TIMESTAMP,
+    user_id  INT, --the user that the record belongs to
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS Comments (
+    comment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    author_name VARCHAR(255),
+    email VARCHAR(255),
+    comment TEXT NOT NULL,
+    comment_date CURRENT_TIMESTAMP,
     user_id  INT, --the user that the record belongs to
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
