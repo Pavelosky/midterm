@@ -21,8 +21,29 @@ const userRoutes = require('./routes/user');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+  // Render the home.ejs file
+  res.render('home');
+})
+
+app.get('/article', (req, res) => {
+  // Render the home.ejs file
+  res.render('article');
+})
+
+app.get('/authors_page', (req, res) => {
+  // Render the home.ejs file
+  res.render('authors_page');
+})
+
+app.get('/authors_settings', (req, res) => {
+  // Render the home.ejs file
+  res.render('authors_settings');
+})
+
+app.get('/edit_article', (req, res) => {
+  // Render the home.ejs file
+  res.render('edit_article');
+})
 
 //this adds all the userRoutes to the app under the path /user
 app.use('/user', userRoutes);

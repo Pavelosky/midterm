@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Author's Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <h1>{{ blogTitle }}</h1>
+    <h2>{{ blogSubtitle }}</h2>
+    <p>Author: {{ authorName }}</p>
+  </header>
+  <h2>This is the Author Page</h2>
+  <nav>
+    <a href="/authors_settings">Settings</a>
+  </nav>
+  <button onclick="createNewDraft()">Create new draft</button>
+
+  <h3>Published Articles</h3>
+  <ul>
+    {% for article in publishedArticles %}
+      <li>
+        <p>Created: {{ article.createdDate }}, Published: {{ article.publicationDate }}, Last Modified: {{ article.lastModifiedDate }}, Likes: {{ article.likes }}</p>
+        <a href="/article/{{ article.id }}">Sharing Link</a>
+        <button onclick="deleteArticle('{{ article.id }}')">Delete</button>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h3>Draft Articles</h3>
+  <ul>
+    {% for article in draftArticles %}
+      <li>
+        <p>Created: {{ article.createdDate }}, Last Modified: {{ article.lastModifiedDate }}</p>
+        <a href="/authors_page{{ article.id }}">Edit</a>
+        <button onclick="publishArticle('{{ article.id }}')">Publish</button>
+        <button onclick="deleteArticle('{{ article.id }}')">Delete</button>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <script>
+
+  </script>
+</body>
+</html>

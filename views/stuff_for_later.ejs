@@ -1,0 +1,68 @@
+List of the articles template for home.ejs
+
+<ul>
+    <% articles.forEach((article) => { %>
+     <li>
+        <h3><%= article.title %></h3>
+       <p>Published on <%= formatDate(article.publicationDate) %></p>
+       <a href="/reader/article/<%= article.id %>">Read more</a>
+        <p>Author: <%= authorName %></p>
+     </li>
+    <% }) %>
+ </ul>
+
+
+
+
+ Reader article page
+
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Reader - Article Page</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1><%= article.title %></h1>
+    <h2><%= article.subtitle %></h2>
+    <p>Published on <%= formatDate(article.publicationDate) %></p>
+    <p>Likes: <%= article.likes %></p>
+  </header>
+  <main>
+    <article>
+      <p><%= article.content %></p>
+    </article>
+    <button id="likeButton" onclick="likeArticle()">Like</button>
+    <form action="/reader/article/<%= article.id %>/comment" method="POST">
+      <input type="text" name="comment" placeholder="Add a comment">
+      <button type="submit">Submit Comment</button>
+    </form>
+    <h2>Previous Comments</h2>
+    <ul>
+      <% comments.forEach((comment) => { %>
+        <li>
+          <p><%= formatDate(comment.date) %>: <%= comment.text %></p>
+        </li>
+      <% }) %>
+    </ul>
+    <a href="/reader">Back</a>
+  </main>
+
+  <script>
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    function likeArticle() {
+      // Implement your logic to handle the like functionality
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
