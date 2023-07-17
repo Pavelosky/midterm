@@ -45,6 +45,10 @@ app.get('/edit_article', (req, res) => {
   res.render('edit_article');
 })
 
+app.get('/index', (req, res) => {
+  res.render('index')
+});
+
 //this adds all the userRoutes to the app under the path /user
 app.use('/user', userRoutes);
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-db": "type - db_schema.sql | sqlite3 database.db",
+    "build-db": "type db_schema.sql | sqlite3 database.db",
     "clean-db": "rm database.db #remove the old database",
     "start": "node index.js"
   },
