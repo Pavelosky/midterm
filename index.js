@@ -4,6 +4,9 @@ const app = express();
 const port = 3000;
 const sqlite3 = require('sqlite3').verbose();
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
 //items in the global namespace are accessible throught out the node application
 global.db = new sqlite3.Database('./database.db',function(err){
   if(err){
@@ -32,7 +35,7 @@ app.get('/', (req, res) => {
     let sqlquery = "INSERT INTO Users (username, password, email, is_author) VALUES (?,?,?,?)";
     // execute sql query
     let newrecord = [req.body.username, req.body.password, req.body.email, req.body.is_author];
-    db.query(sqlquery, newrecord, (err, result) => {
+    db.run(sqlquery, newrecord, (err, result) => {
     if (err) {
     return console.error(err.message);
     }else
