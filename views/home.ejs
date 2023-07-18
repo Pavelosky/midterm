@@ -13,7 +13,7 @@
   <main>
     <h2>Published Articles</h2>
     
-    <form method="POST" action="/home" class="container mt-4">
+    <form method="POST" action="/home" class="container">
       <div class="mb-3">
         <p>Your username</p>
         <input id="username" type="text" name="username" value="" class="form-control">
@@ -26,16 +26,25 @@
         <p>Your email</p>
         <input id="email" type="text" name="email" value="" class="form-control">
       </div>
-      <div class="dropdown" id="is_author">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Are you an author?
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Yes</a>
-          <a class="dropdown-item" href="#">No</a>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">OK</button>
+<!-- Version in bootstrap -->
+      <!-- <div class="form-group w-25">
+        <label for="is_author">Are you an author?</label>
+        <select class="form-control" name="is_author" id="is_author">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div> -->
+<br>
+
+<!-- Version with pure HTML -->
+      <label for="is_author">Are you an author? </label>
+      <select name="is_author" id="is_author">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+      <br><br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+
     </form>
     
 
