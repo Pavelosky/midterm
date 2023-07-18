@@ -13,6 +13,31 @@
   <main>
     <h2>Published Articles</h2>
     
+    <form method="POST" action="/registered" class="container mt-4">
+      <div class="mb-3">
+        <p>Your username</p>
+        <input id="username" type="text" name="username" value="" class="form-control">
+      </div>
+      <div class="mb-3">
+        <p>Your password</p>
+        <input id="password" type="text" name="password" value="" class="form-control">
+      </div>
+      <div class="mb-3">
+        <p>Your email</p>
+        <input id="email" type="text" name="email" value="" class="form-control">
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Are you an author?
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Yes</a>
+          <a class="dropdown-item" href="#">No</a>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">OK</button>
+    </form>
+    
 
     <ul>
         <li>
