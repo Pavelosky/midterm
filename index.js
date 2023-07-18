@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const app = express();
 const port = 3000;
 const sqlite3 = require('sqlite3').verbose();
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 
   app.post("/home", function (req,res) {
     // saving data in database
+    console.log(req.body)
     let sqlquery = "INSERT INTO Users (username, password, email, is_author) VALUES (?,?,?,?)";
     // execute sql query
     let newrecord = [req.body.username, req.body.password, req.body.email, req.body.is_author];
