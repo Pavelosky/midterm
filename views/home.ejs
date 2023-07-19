@@ -46,8 +46,13 @@
       <button type="submit" class="btn btn-primary">Submit</button>
 
     </form>
-    
-
+    <div>
+      <p>Find an article by keyword</p>
+      <form action="/search-result-db" method="GET">
+      <input id="search-box" type="text" name="keyword" value="Default">
+      <input type="submit" value="Submit" >
+      </form>
+    </div>
     <ul>
         <li>
           <h3>This will be a list of articles</h3>
