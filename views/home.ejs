@@ -56,16 +56,6 @@
 
 
 <!-- This below is  not functional. What even is this? -->
-    <ul>
-      <% articles.forEach((article) => { %>
-       <li>
-          <h3><%= article.title %></h3>
-         <p>Published on <%= formatDate(article.publicationDate) %></p>
-         <a href="/reader/article/<%= article.id %>">Read more</a>
-          <p>Author: <%= authorName %></p>
-       </li>
-      <% }) %>
-   </ul>
 
 
 
