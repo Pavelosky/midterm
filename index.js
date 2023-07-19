@@ -66,10 +66,10 @@ app.get('/edit_article', (req, res) => {
 
 app.get("/search-result-db", function (req, res) {
   //searching in the database
-  let word = `${req.query.keyword}`;
-  let sqlquery = "SELECT * FROM `Articles` WHERE user_id LIKE ?";
+  let word = `%${req.query.keyword}%`;
+  let sqlquery = "SELECT * FROM `Articles` WHERE content LIKE ?";
   // execute sql query
-  db.run(sqlquery,word, (err, result) => {
+  db.all(sqlquery,word, (err, result) => {
     if (err) {
       return console.error("No keyword found in any of the articles "
       + req.query.keyword + " error: "+ err.message);

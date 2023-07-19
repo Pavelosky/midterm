@@ -8,7 +8,10 @@
   <h3>You can see names and prices of all available books at our bookshop here:</h3>
   <ul>
     <% availableArticles.forEach(function(article) { %>
-      <li><%= article.title %>, <%= article.subtitle %>, <%= article.content %>, <%= article.publicationDate %></li>
+      <li><%= article.title %></li> 
+      <li><%= article.subtitle %></li>
+      <li> <%= article.content %></li> 
+      <li><%= article.publicationDate %></li>
     <% }) %>
   </ul>
 </body>

@@ -42,3 +42,5 @@ INSERT INTO Articles ('title','subtitle','content','publication_date', 'user_id'
 
 COMMIT;
 
+
+
