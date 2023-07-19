@@ -66,20 +66,19 @@ app.get('/edit_article', (req, res) => {
 
 app.get("/search-result-db", function (req, res) {
   //searching in the database
-  let word = `%${req.query.keyword}%`;
-  let sqlquery = "SELECT * FROM `Articles` WHERE content LIKE ?";
+  let word = `${req.query.keyword}`;
+  let sqlquery = "SELECT * FROM `Articles` WHERE user_id LIKE ?";
   // execute sql query
   db.run(sqlquery,word, (err, result) => {
-  if (err) {
-  return console.error("No keyword found in any of the articles "
-  + req.query.keyword + " error: "+ err.message);
-  }else{
-  console.log(word)
-  console.log(result)
-  res.render ('list_of_articles',{availableArticles:result});
-  }
+    if (err) {
+      return console.error("No keyword found in any of the articles "
+      + req.query.keyword + " error: "+ err.message);
+      }else{
+      console.log(word)
+      res.render ('list_of_articles',{availableArticles:result});
+    }
   });
-  });
+});
 
 app.get('/index', (req, res) => {
   res.render('index')

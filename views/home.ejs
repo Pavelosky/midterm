@@ -26,7 +26,7 @@
         <p>Your email</p>
         <input id="email" type="text" name="email" value="" class="form-control">
       </div>
-<!-- Version in bootstrap -->
+<!-- Version of is author? in bootstrap -->
       <!-- <div class="form-group w-25">
         <label for="is_author">Are you an author?</label>
         <select class="form-control" name="is_author" id="is_author">
@@ -53,6 +53,22 @@
       <input type="submit" value="Submit" >
       </form>
     </div>
+
+
+<!-- This below is  not functional. What even is this? -->
+    <ul>
+      <% articles.forEach((article) => { %>
+       <li>
+          <h3><%= article.title %></h3>
+         <p>Published on <%= formatDate(article.publicationDate) %></p>
+         <a href="/reader/article/<%= article.id %>">Read more</a>
+          <p>Author: <%= authorName %></p>
+       </li>
+      <% }) %>
+   </ul>
+
+
+
     <ul>
         <li>
           <h3>This will be a list of articles</h3>
