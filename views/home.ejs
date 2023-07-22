@@ -14,7 +14,7 @@
     <div class="row">
 
       <div class="col-md-9">
-        <div class="mt-4">
+        <div class="mt-4 m-3">
           <h2>Find an article by keyword</h2>
           <form action="/search-result-db" method="GET">
             <div class="input-group">
@@ -22,25 +22,28 @@
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
-        </div>
-        <h2>Articles List</h2>
-        <ul class="list-group">
-          <% availableArticles.forEach(function(article) { %>
-            <li class="list-group-item">
-              <h3><%= article.title %></h3>
-              <p>Published on: <b><%= article.publication_date %></b></p>
-              <p><%= article.content %></p>
-              <form action="/article-id" method="GET">
-                <div>
-                  <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
-                  <button type="submit" class="btn btn-primary">Read more</button>
+        </div >
+        <div class="mt-4 m-3">
+          <h2>Articles List</h2>
+            <ul class="list-group">
+              <% availableArticles.forEach(function(article) { %>
+                <div class="card m-1">
+                  <li class="list-group-item">
+                    <h3><%= article.title %></h3>
+                    <p>Published on: <b><%= article.publication_date %></b></p>
+                    <p><%= article.content.substring(0, 250) + "..." %></p>
+                    <form action="/article-id" method="GET">
+                      <div>
+                        <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
+                        <button type="submit" class="btn btn-primary">Read more</button>
+                      </div>
+                    </form>
+                    <p>Author: <b><%= article.author %></b></p>
+                  </li>
                 </div>
-              </form>
-              <p>article id: <%= article.article_id %></p>
-              <p>Author: <b><%= article.author %></b></p>
-            </li>
-          <% }) %>
-        </ul>
+              <% }) %>
+            </ul> 
+        </div>
       </div>
 
 

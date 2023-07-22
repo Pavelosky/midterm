@@ -104,8 +104,7 @@ app.get("/article-id", function (req, res) {
     db.all(sqlquery, id, (err, articleResults) => {
       if (err) {
         return console.error("Error fetching article data: " + err.message);
-      }
-
+      } 
       db.all(commentquery, id, (err, commentResults) => {
         if (err) {
           return console.error("Error fetching comment data: " + err.message);

@@ -1,18 +1,39 @@
 <!doctype html>
 <html>
 <head>
-  <title>List webpage!</title>
+  <title>Search result</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-  <h1>This is List Page</h1>
-  <h3>You can see names and prices of all articles here:</h3>
-  <ul>
-    <% availableArticles.forEach(function(article) { %>
-      <li><%= article.title %></li> 
-      <li><%= article.subtitle %></li>
-      <li> <%= article.content %></li> 
-      <li><%= article.publicationDate %></li>
-    <% }) %>
-  </ul>
+  <header class="container py-4">
+    <h2> All articles containing the keyword</h2>
+  </header>
+  <div class="col-md-9 mt-4 m-3 ps-5">
+    <h2>Articles List</h2>
+      <ul class="list-group">
+        <% availableArticles.forEach(function(article) { %>
+          <div class="card m-1">
+            <li class="list-group-item">
+              <h3><%= article.title %></h3>
+              <p>Published on: <b><%= article.publication_date %></b></p>
+              <p><%= article.content.substring(0, 250) + "..." %></p>
+              <form action="/article-id" method="GET">
+                <div>
+                  <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
+                  <button type="submit" class="btn btn-primary">Read more</button>
+                </div>
+              </form>
+              <p>Author: <b><%= article.author %></b></p>
+            </li>
+          </div>
+        <% }) %>
+      </ul> 
+      <div class="pb-5">
+        <a href="/" class="btn btn-primary mt-4">Back</a>
+      </div>
+  </div>
+  
 </body>
 </html>
+
+
