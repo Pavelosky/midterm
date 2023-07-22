@@ -63,6 +63,27 @@ app.get('/article', (req, res) => {
   res.render('article');
 })
 
+  app.post('/submit-comment', (req, res) => {
+    const articleId = req.body.article_id;
+    const authorName = req.body.author_name;
+    const email = req.body.email;
+    const commentText = req.body.comment;
+
+    const sqlQuery = 'INSERT INTO Comments (article_id, author_name, email, comment, comment_date) VALUES (?, ?, ?, ?, DATE("now"))';
+    const values = [articleId, authorName, email, commentText];
+    console.log(values)
+    db.run(sqlQuery, values, (err) => {
+      if (err) {
+        console.error('Error inserting comment:', err.message);
+        res.status(500).send('Error submitting comment.');
+      } else {
+        console.log('Comment inserted successfully.');
+        res.redirect('/article-id?id=' + articleId);
+      }
+    });
+  });
+
+
 app.get('/authors_page', (req, res) => {
   // Render the home.ejs file
   res.render('authors_page');

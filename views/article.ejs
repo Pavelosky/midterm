@@ -26,12 +26,27 @@
     </ul>
   </header>
   <main class="container">
-
     <button id="likeButton" onclick="likeArticle()">Like</button>
-    <form action="/reader/article/<%= article.id %>/comment" method="POST">
-      <input type="text" name="comment" placeholder="Add a comment">
-      <button type="submit">Submit Comment</button>
-    </form>
+
+    <div class="col-md-6">
+      <h2>Add a Comment</h2>
+      <form action="/submit-comment" method="POST">
+        <input type="hidden" name="article_id" id="article_id_input">
+        <div class="form-group">
+          <label for="author_name">Your Name:</label>
+          <input type="text" class="form-control" id="author_name" name="author_name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="comment">Your Comment:</label>
+          <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-secondary mt-3">Submit Comment</button>
+      </form>
+    </div>
 
     <h2 class="mt-4">Previous Comments</h2>
     <ul class="list-group">
@@ -48,6 +63,23 @@
       <a href="/" class="btn btn-danger mt-4">Back to home</a>
     </div>
   </main>
+
+
+<!-- Script below was written by my colleague -->
+  <script>
+    const articleIds = <%= JSON.stringify(article.map(a => a.article_id)) %>;
+
+    const commentForm = document.querySelector('form');
+    const articleIdInput = document.getElementById('article_id_input');
+
+    commentForm.addEventListener('submit', (event) => {
+      // Get the current article_id associated with the comment form
+      const currentArticleId = articleIds[0]; // You can modify this depending on your logic
+
+      // Set the value of the article_id input field with the current article_id
+      articleIdInput.value = currentArticleId;
+    });
+  </script>
 
 </body>
 </html>
