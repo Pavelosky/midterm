@@ -24,10 +24,24 @@ const userRoutes = require('./routes/user');
 //set the app to use ejs for rendering
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  // Render the home.ejs file
-  res.render('home');
-  })
+// app.get('/', (req, res) => {
+//   // Render the home.ejs file
+//   res.render('home');
+//   })
+
+app.get("/", function (req, res) {
+  //searching in the database
+  let sqlquery = "SELECT * FROM `Articles`";
+  // execute sql query
+  db.all(sqlquery, (err, result) => {
+    if (err) {
+      return console.error("No articles "
+      + req.query.keyword + " error: "+ err.message);
+      }else{
+      res.render ('home',{availableArticles:result});
+    }
+  });
+});
 
   app.post("/home", function (req,res) {
     // saving data in database
