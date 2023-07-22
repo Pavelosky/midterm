@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS Articles (
 
 CREATE TABLE IF NOT EXISTS Comments (
     comment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    article_id INTEGER NOT NULL,
     author_name VARCHAR(255),
     email VARCHAR(255),
     comment TEXT NOT NULL,

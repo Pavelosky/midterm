@@ -8,6 +8,7 @@
     "build-db": "cat db_schema.sql | sqlite3 database.db",
     "build-db-win": "type db_schema.sql | sqlite3 database.db",
     "clean-db": "rm database.db #remove the old database",
+    "clean-db-win": "del database.db",
     "start": "node index.js"
   },
   "author": "Simon Katan",
