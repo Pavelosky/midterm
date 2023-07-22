@@ -94,6 +94,32 @@ app.get("/search-result-db", function (req, res) {
   });
 });
 
+app.get("/article-id", function (req, res) {
+  //searching in the database
+  let id = `${req.query.id}`;
+  let sqlquery = "SELECT * FROM `Articles` WHERE article_id = ?;";
+  let commentquery = "SELECT * FROM Comments WHERE article_id = ?;"
+
+  db.serialize(() => {
+    db.all(sqlquery, id, (err, articleResults) => {
+      if (err) {
+        return console.error("Error fetching article data: " + err.message);
+      }
+
+      db.all(commentquery, id, (err, commentResults) => {
+        if (err) {
+          return console.error("Error fetching comment data: " + err.message);
+        }
+        console.log("Article result:");
+        console.log(articleResults);
+        console.log("Comment result:");
+        console.log(commentResults);
+        res.render('article', { article: articleResults, comments: commentResults });
+      });
+    });
+  });
+});
+
 app.get('/index', (req, res) => {
   res.render('index')
 });

@@ -5,36 +5,48 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-  <header>
-    <h1>{{ article.title }}</h1>
-    <h2>{{ article.subtitle }}</h2>
-    <p>Published on {{ article.publicationDate }}</p>
-    <p>Likes: {{ article.likes }}</p>
+  <header class="container mt-4 mb-4">
+    <ul class="list-group">
+      <% article.forEach(function(article) { %>
+        <li class="list-group-item">
+          <h1 class="display-4"><%= article.title %></h1>
+          <h2><%= article.subtitle %></h2>
+          <p>Published on <b><%= article.publication_date %></b></p>
+          <p>Likes: <%= article.likes %></p>
+        </li>
+
+        <div class="card">
+          <div class="card-body">
+            <article>
+              <p><%= article.content %></p>
+            </article>
+          </div>
+        </div>
+      <% }) %>
+    </ul>
   </header>
-  <main>
-    <article>
-      <p>{{ article.content }}</p>
-    </article>
+  <main class="container">
+
     <button id="likeButton" onclick="likeArticle()">Like</button>
-    <form action="/reader/article/{{ article.id }}/comment" method="POST">
+    <form action="/reader/article/<%= article.id %>/comment" method="POST">
       <input type="text" name="comment" placeholder="Add a comment">
       <button type="submit">Submit Comment</button>
     </form>
-    <h2>Previous Comments</h2>
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <p>{{ comment.date }}: {{ comment.text }}</p>
+
+    <h2 class="mt-4">Previous Comments</h2>
+    <ul class="list-group">
+      <% comments.forEach(function(comment) { %>
+        <li class="list-group-item">
+          <p> <%= comment.comment_date %></p>
+          <p> <%= comment.comment %></p>
+          <p> <%= comment.author_name %></p>
+          <p> <%= comment.email %></p>
         </li>
-      {% endfor %}
+      <% }) %>
     </ul>
-    <a href="/reader">Back</a>
+
+    <a href="/reader" class="btn btn-primary mt-4">Back</a>
   </main>
 
-  <script>
-    function likeArticle() {
-      // Implement your logic to handle the like functionality
-    }
-  </script>
 </body>
 </html>

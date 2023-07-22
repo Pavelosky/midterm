@@ -30,14 +30,20 @@
               <h3><%= article.title %></h3>
               <p>Published on: <b><%= article.publication_date %></b></p>
               <p><%= article.content %></p>
-              <a href="linktonowhere">Read more</a>
+              <form action="/article-id" method="GET">
+                <div>
+                  <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
+                  <button type="submit" class="btn btn-primary">Read more</button>
+                </div>
+              </form>
+              <p>article id: <%= article.article_id %></p>
               <p>Author: <b><%= article.author %></b></p>
             </li>
           <% }) %>
         </ul>
       </div>
 
-      
+
       <div class="col-md-3">
         <h2>Sign up</h2>
         
@@ -63,16 +69,12 @@
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        
-        
       </div>
-
-      
     </div>
   </main>
 
   <footer class="container py-4">
-    <p>&copy; <b>Here will be a logo</b>. All rights reserved.</p>
+    <p>&copy; <b>People's blog</b>. All rights reserved.</p>
   </footer>
   
 </body>
