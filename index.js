@@ -45,18 +45,13 @@ app.get("/", function (req, res) {
     // execute sql query
     let newrecord = [req.body.username, req.body.password, req.body.email, req.body.is_author];
     db.run(sqlquery, newrecord, (err, result) => {
-    if (err) {
-    return console.error(err.message);
-    }else
-    res.send("Your account has been created, <br> <b>Username:</b> "+ req.body.username + "<br><b> Password: </b>"+ req.body.password +" <br><b> email: </b>"+ req.body.email +
-    "<br><b>Author:</b> "+ req.body.is_author)
+      if (err) {
+      return console.error(err.message);
+      }else
+      res.send("Your account has been created, <br> <b>Username:</b> "+ req.body.username + "<br><b> Password: </b>"+ req.body.password +" <br><b> email: </b>"+ req.body.email +
+      "<br><b>Author:</b> "+ req.body.is_author)
+      });
     });
-    });
-
-app.get('/article', (req, res) => {
-  // Render the home.ejs file
-  res.render('article');
-})
 
   app.post('/submit-comment', (req, res) => {
     const articleId = req.body.article_id;
@@ -159,10 +154,19 @@ app.get('/authors_settings', (req, res) => {
   res.render('authors_settings');
 })
 
-app.get('/edit_article', (req, res) => {
-  // Render the home.ejs file
-  res.render('edit_article');
-})
+app.get('/edit_draft', (req, res) => {
+  //searching in the database
+  let id = `${req.query.id}`;
+  let sqlquery = "SELECT * FROM `Drafts` WHERE draft_id = ?;";
+
+  db.all(sqlquery, id, (err, articleResults) => {
+    if (err) {
+      return console.error("Error fetching article data: " + err.message);
+    }
+  });
+});
+
+
 
 app.get('/create_draft', (req, res) => {
   // Render the home.ejs file
@@ -216,18 +220,10 @@ app.get("/article-id", function (req, res) {
         if (err) {
           return console.error("Error fetching comment data: " + err.message);
         }
-        console.log("Article result:");
-        console.log(articleResults);
-        console.log("Comment result:");
-        console.log(commentResults);
         res.render('article', { article: articleResults, comments: commentResults });
       });
     });
   });
-});
-
-app.get('/index', (req, res) => {
-  res.render('index')
 });
 
 //this adds all the userRoutes to the app under the path /user
