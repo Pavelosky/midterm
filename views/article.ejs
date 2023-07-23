@@ -5,36 +5,78 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-  <header>
-    <h1>{{ article.title }}</h1>
-    <h2>{{ article.subtitle }}</h2>
-    <p>Published on {{ article.publicationDate }}</p>
-    <p>Likes: {{ article.likes }}</p>
-  </header>
-  <main>
-    <article>
-      <p>{{ article.content }}</p>
-    </article>
-    <button id="likeButton" onclick="likeArticle()">Like</button>
-    <form action="/reader/article/{{ article.id }}/comment" method="POST">
-      <input type="text" name="comment" placeholder="Add a comment">
-      <button type="submit">Submit Comment</button>
-    </form>
-    <h2>Previous Comments</h2>
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <p>{{ comment.date }}: {{ comment.text }}</p>
+  <header class="container mt-4 mb-4">
+    <ul class="list-group">
+      <% article.forEach(function(article) { %>
+        <li class="list-group-item">
+          <h1 class="display-4"><%= article.title %></h1>
+          <h2><%= article.subtitle %></h2>
+          <p>Published on <b><%= article.publication_date %></b></p>
+          <p>Likes: <%= article.likes %></p>
         </li>
-      {% endfor %}
+
+        <div class="card mt-2">
+          <div class="card-body m-2">
+            <article>
+              <p><%= article.content %></p>
+            </article>
+          </div>
+        </div>
+      <% }) %>
     </ul>
-    <a href="/reader">Back</a>
+  </header>
+  <main class="container">
+    <button id="likeButton" onclick="likeArticle()">Like</button>
+
+    <div class="col-md-6">
+      <h2>Add a Comment</h2>
+      <form action="/submit-comment" method="POST">
+        <input type="hidden" name="article_id" id="article_id_input">
+        <div class="form-group">
+          <label for="author_name">Your Name:</label>
+          <input type="text" class="form-control" id="author_name" name="author_name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="comment">Your Comment:</label>
+          <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-secondary mt-3">Submit Comment</button>
+      </form>
+    </div>
+
+    <h2 class="mt-4">Previous Comments</h2>
+    <ul class="list-group">
+      <% comments.forEach(function(comment) { %>
+        <li class="list-group-item">
+          <p> <%= comment.comment_date %></p>
+          <p> <%= comment.comment %></p>
+          <p> <%= comment.author_name %></p>
+          <p> <%= comment.email %></p>
+        </li>
+      <% }) %>
+    </ul>
+    <div class="pb-5">
+      <a href="/" class="btn btn-danger mt-4">Back to home</a>
+    </div>
   </main>
 
-  <script>
-    function likeArticle() {
-      // Implement your logic to handle the like functionality
-    }
-  </script>
+    <!-- Script below was written by my friend -->
+    <script>
+      const articleIds = <%= JSON.stringify(article.map(a => a.article_id)) %>;
+      const commentForm = document.querySelector('form');
+      const articleIdInput = document.getElementById('article_id_input');
+  
+      commentForm.addEventListener('submit', (event) => {
+        // Get the current article_id associated with the comment form
+        const currentArticleId = articleIds[0]; // You can modify this depending on your logic
+  
+        // Set the value of the article_id input field with the current article_id
+        articleIdInput.value = currentArticleId;
+      });
+    </script>
 </body>
 </html>

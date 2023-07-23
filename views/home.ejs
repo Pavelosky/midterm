@@ -5,79 +5,81 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-  <header>
-    <h1>This is peoples blog</h1>
+  <header class="container py-4 text-bg-secondary">
+    <h1>This is people's blog</h1>
     <h2>It's about the stuff people like to write about</h2>
-    
   </header>
-  <main>
-    <h2>Published Articles</h2>
-    
-    <form method="POST" action="/home" class="container">
-      <div class="mb-3">
-        <p>Your username</p>
-        <input id="username" type="text" name="username" value="" class="form-control">
-      </div>
-      <div class="mb-3">
-        <p>Your password</p>
-        <input id="password" type="text" name="password" value="" class="form-control">
-      </div>
-      <div class="mb-3">
-        <p>Your email</p>
-        <input id="email" type="text" name="email" value="" class="form-control">
-      </div>
-<!-- Version of is author? in bootstrap -->
-      <!-- <div class="form-group w-25">
-        <label for="is_author">Are you an author?</label>
-        <select class="form-control" name="is_author" id="is_author">
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div> -->
-<br>
+  
+  <main class="container py-4">
+    <div class="row">
 
-<!-- Version with pure HTML -->
-      <label for="is_author">Are you an author? </label>
-      <select name="is_author" id="is_author">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-      </select>
-      <br><br>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="col-md-9">
+        <div class="mt-4 m-3">
+          <h2>Find an article by keyword</h2>
+          <form action="/search-result-db" method="GET">
+            <div class="input-group">
+              <input id="search-box" type="text" name="keyword" value="Default" class="form-control">
+              <button type="submit" class="btn btn-secondary">Search</button>
+            </div>
+          </form>
+        </div >
+        <div class="mt-4 m-3">
+          <h2>Articles List</h2>
+            <ul class="list-group">
+              <% availableArticles.forEach(function(article) { %>
+                <div class="card m-1">
+                  <li class="list-group-item">
+                    <h3><%= article.title %></h3>
+                    <p>Published on: <b><%= article.publication_date %></b></p>
+                    <p><%= article.content.substring(0, 250) + "..." %></p>
+                    <p>Author: <b><%= article.author %></b></p>
+                    <form action="/article-id" method="GET">
+                      <div>
+                        <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
+                        <button type="submit" class="btn btn-primary">Read more</button>
+                      </div>
+                    </form>
+                    
+                  </li>
+                </div>
+              <% }) %>
+            </ul> 
+        </div>
+      </div>
 
-    </form>
-    <div>
-      <p>Find an article by keyword</p>
-      <form action="/search-result-db" method="GET">
-      <input id="search-box" type="text" name="keyword" value="Default">
-      <input type="submit" value="Submit" >
-      </form>
+
+      <div class="col-md-3">
+        <h2>Sign up</h2>
+        
+        <form method="POST" action="/home">
+          <div class="mb-3">
+            <label for="username">Your username</label>
+            <input id="username" type="text" name="username" value="" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="password">Your password</label>
+            <input id="password" type="text" name="password" value="" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="email">Your email</label>
+            <input id="email" type="text" name="email" value="" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="is_author">Are you an author?</label>
+            <select class="form-control" name="is_author" id="is_author">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Sign up</button>
+        </form>
+      </div>
     </div>
-
-
-<!-- This below is  not functional. What even is this? -->
-
-
-
-    <ul>
-        <li>
-          <h3>This will be a list of articles</h3>
-          <p>Published on: <b>the date will be here</b>></p>
-          <a href="linktonowhere">Read more</a>
-          <p>Author: <b>this will show the name of the author</b></p>
-        </li>
-    </ul>
-
   </main>
-  <footer>
-    <p>&copy; <b>Here will be a year and logo</b>. All rights reserved.</p>
-  </footer>
 
-  <script>
-    function formatDate(dateString) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
-    }
-  </script>
+  <footer class="container py-4">
+    <p>&copy; <b>People's blog</b>. All rights reserved.</p>
+  </footer>
+  
 </body>
 </html>
