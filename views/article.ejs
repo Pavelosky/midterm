@@ -15,8 +15,8 @@
           <p>Likes: <%= article.likes %></p>
         </li>
 
-        <div class="card">
-          <div class="card-body">
+        <div class="card mt-2">
+          <div class="card-body m-2">
             <article>
               <p><%= article.content %></p>
             </article>
@@ -64,22 +64,19 @@
     </div>
   </main>
 
-
-<!-- Script below was written by my colleague -->
-  <script>
-    const articleIds = <%= JSON.stringify(article.map(a => a.article_id)) %>;
-
-    const commentForm = document.querySelector('form');
-    const articleIdInput = document.getElementById('article_id_input');
-
-    commentForm.addEventListener('submit', (event) => {
-      // Get the current article_id associated with the comment form
-      const currentArticleId = articleIds[0]; // You can modify this depending on your logic
-
-      // Set the value of the article_id input field with the current article_id
-      articleIdInput.value = currentArticleId;
-    });
-  </script>
-
+    <!-- Script below was written by my friend -->
+    <script>
+      const articleIds = <%= JSON.stringify(article.map(a => a.article_id)) %>;
+      const commentForm = document.querySelector('form');
+      const articleIdInput = document.getElementById('article_id_input');
+  
+      commentForm.addEventListener('submit', (event) => {
+        // Get the current article_id associated with the comment form
+        const currentArticleId = articleIds[0]; // You can modify this depending on your logic
+  
+        // Set the value of the article_id input field with the current article_id
+        articleIdInput.value = currentArticleId;
+      });
+    </script>
 </body>
 </html>

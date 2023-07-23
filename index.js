@@ -85,9 +85,30 @@ app.get('/article', (req, res) => {
 
 
 app.get('/authors_page', (req, res) => {
-  // Render the home.ejs file
-  res.render('authors_page');
-})
+  //searching in the database
+  let word = `%${req.query.keyword}%`;
+  let articlequery = "SELECT * FROM `Articles` WHERE user_id = ?";
+  let draftquery = "SELECT * FROM `Drafts` WHERE user_id = ?";
+  
+  db.serialize(()=>{
+    db.all(articlequery,1, (err, articleResults) => {
+      if (err) {
+        return console.error("No keyword found in any of the articles "
+        + req.query.keyword + " error: "+ err.message);
+        }
+        db.all(draftquery, 1, (err, draftResults) => {
+          if (err) {
+            return console.error("Error fetching comment data: " + err.message);
+          }
+          console.log("Article result:");
+          console.log(articleResults);
+          console.log("Comment result:");
+          console.log(draftResults);
+          res.render('authors_page', {publishedArticles:articleResults, draftArticles: draftResults });
+        });
+      })
+    });
+  });
 
 app.get('/authors_settings', (req, res) => {
   // Render the home.ejs file
