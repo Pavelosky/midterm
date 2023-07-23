@@ -81,16 +81,16 @@ app.get('/article', (req, res) => {
 
 app.get('/authors_page', (req, res) => {
   //searching in the database
-  const articlequery = "SELECT * FROM `Articles` WHERE user_id = ?";
-  const draftquery = "SELECT * FROM `Drafts` WHERE user_id = ?";
+  const articlequery = "SELECT * FROM `Articles`;";
+  const draftquery = "SELECT * FROM `Drafts`;";
   
   db.serialize(()=>{
-    db.all(articlequery,1, (err, articleResults) => {
+    db.all(articlequery, (err, articleResults) => {
       if (err) {
         return console.error("No keyword found in any of the articles "
         + req.query.keyword + " error: "+ err.message);
         }
-        db.all(draftquery, 1, (err, draftResults) => {
+        db.all(draftquery, (err, draftResults) => {
           if (err) {
             return console.error("Error fetching comment data: " + err.message);
           }
@@ -163,6 +163,27 @@ app.get('/edit_article', (req, res) => {
   // Render the home.ejs file
   res.render('edit_article');
 })
+
+app.get('/create_draft', (req, res) => {
+  // Render the home.ejs file
+  res.render('create_draft');
+})
+
+app.post('/create-draft', (req, res) => {
+  const {articleTitle, articleSubtitle, articleText, userId} = req.body;
+
+  const sqlQuery = 'INSERT INTO Drafts (title, subtitle, content, publication_date, user_id) VALUES (?, ?, ?, DATE("now"), ?)';
+  db.run(sqlQuery, [articleTitle, articleSubtitle, articleText, userId], (err) => {
+    if (err) {
+      console.error('Error creating article:', err.message);
+      res.status(500).send('Error creating article.');
+    } else {
+      console.log('Article created successfully.');
+      // Redirect to the author's page
+      res.redirect('/authors_page');
+    }
+  });
+});
 
 app.get("/search-result-db", function (req, res) {
   //searching in the database

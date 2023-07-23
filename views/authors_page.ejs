@@ -7,11 +7,15 @@
 <body>
   <header class="container mt-4 mb-4">
     <h1>Pawel - Author Home Page</h1>
-    <button href="/author/settings" class="btn btn-warning" onclick="createNewDraft()">Settings</button>
-    <button class="btn btn-info">Create new draft</button>
+    <div class="d-flex">
+      <button href="/author/settings" class="btn btn-warning me-2">Settings</button>
+      <form action="/create_draft" method="GET">
+        <button class="btn btn-info">Create new draft</button>
+      </form>
+    </div>
   </header>
-  <main class="container">
 
+  <main class="container">
     <section class="published-articles mt-4 mb-4">
       <h2>Published Articles</h2>
       <ul class="list-group">
@@ -84,24 +88,7 @@
         <% }) %>
       </ul>
     </section>
-
   </main>
 
-  <script>
-    function createNewDraft() {
-      // Implement logic to create a new draft article and redirect to its edit page
-      // Example: window.location.href = '/author/new-draft';
-    }
-
-    function publishArticle(articleId) {
-      // Implement logic to publish the draft article with the given articleId
-      // Example: window.location.href = '/author/publish/' + articleId;
-    }
-
-    function deleteArticle(articleId) {
-      // Implement logic to delete the article with the given articleId
-      // Example: window.location.href = '/author/delete/' + articleId;
-    }
-  </script>
 </body>
 </html>
