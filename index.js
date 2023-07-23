@@ -24,6 +24,7 @@ const userRoutes = require('./routes/user');
 //set the app to use ejs for rendering
 app.set('view engine', 'ejs');
 
+// this renders the homepage with the articles
 app.get("/", function (req, res) {
   //searching in the database
   let sqlquery = "SELECT * FROM `Articles`";
@@ -38,6 +39,7 @@ app.get("/", function (req, res) {
   });
 });
 
+// Create new user in a database, input is taken from the form field on the left side of the window
   app.post("/home", function (req,res) {
     // saving data in database
     console.log(req.body)
@@ -53,6 +55,7 @@ app.get("/", function (req, res) {
       });
     });
 
+// Add comment under an article, input taken from the comment form on the article page.
   app.post('/submit-comment', (req, res) => {
     const articleId = req.body.article_id;
     const authorName = req.body.author_name;
@@ -73,7 +76,7 @@ app.get("/", function (req, res) {
     });
   });
 
-
+// render authors page using the data in the database
 app.get('/authors_page', (req, res) => {
   //searching in the database
   const articlequery = "SELECT * FROM `Articles`;";
@@ -94,7 +97,8 @@ app.get('/authors_page', (req, res) => {
       })
     });
   });
-  
+
+  // Delete an article from the authors page
   app.post('/delete-article', (req, res) => {
     const articleId = req.body.article_id;
 
@@ -110,6 +114,7 @@ app.get('/authors_page', (req, res) => {
     });
   });
 
+// Delete draft from the authors page
   app.post('/delete-draft', (req, res) => {
     const draftId = req.body.draft_id;
 
@@ -125,6 +130,7 @@ app.get('/authors_page', (req, res) => {
     });
   });
 
+// Publish draft using a button on the authors page
   app.post('/publish-draft', (req, res) => {
     const draftId = req.body.draft_id;
     const sqlQuery = 'INSERT INTO Articles (title, subtitle, content, publication_date, user_id) SELECT title, subtitle, content, DATE("now"), user_id FROM Drafts WHERE draft_id = ?;';
@@ -149,11 +155,13 @@ app.get('/authors_page', (req, res) => {
     });
   });
 
+  // not used
 app.get('/authors_settings', (req, res) => {
   // Render the home.ejs file
   res.render('authors_settings');
 })
 
+// show the draft for editing from the authors page
 app.get('/edit_draft', (req, res) => {
   //searching in the database
   let id = `${req.query.id}`;
@@ -167,6 +175,7 @@ app.get('/edit_draft', (req, res) => {
   });
 });
 
+// updating the edited draft
   app.post('/changed-draft', (req, res) => {
     const {articleTitle, articleSubtitle, articleText, userId, draftId} = req.body;
 
@@ -183,11 +192,13 @@ app.get('/edit_draft', (req, res) => {
     });
   });
 
+  // Render the create_draft page
 app.get('/create_draft', (req, res) => {
   // Render the home.ejs file
   res.render('create_draft');
 })
 
+// send created draft to the database
 app.post('/create-draft', (req, res) => {
   const {articleTitle, articleSubtitle, articleText, userId} = req.body;
 
@@ -204,6 +215,7 @@ app.post('/create-draft', (req, res) => {
   });
 });
 
+// searching through the articles for the specified keyword
 app.get("/search-result-db", function (req, res) {
   //searching in the database
   let word = `%${req.query.keyword}%`;
@@ -220,6 +232,7 @@ app.get("/search-result-db", function (req, res) {
   });
 });
 
+// render the one article and comments after clicking "Read more" on the home page.
 app.get("/article-id", function (req, res) {
   //searching in the database
   let id = `${req.query.id}`;
