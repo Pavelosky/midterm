@@ -163,10 +163,25 @@ app.get('/edit_draft', (req, res) => {
     if (err) {
       return console.error("Error fetching article data: " + err.message);
     }
+    res.render('edit_draft',{availableDraft:articleResults})
   });
 });
 
+  app.post('/changed-draft', (req, res) => {
+    const {articleTitle, articleSubtitle, articleText, userId, draftId} = req.body;
 
+    const sqlQuery = 'UPDATE Drafts SET title = "?", subtitle = "?", content = "?", publication_date = DATE("now"), user_id = "?" WHERE draft_id = ?;';
+    db.run(sqlQuery, [articleTitle, articleSubtitle, articleText, userId, draftId], (err) => {
+      if (err) {
+        console.error('Error updating article:', err.message);
+        res.status(500).send('Error updating article.');
+      } else {
+        console.log('Article updated successfully.');
+        // Redirect to the author's page
+        res.redirect('/authors_page');
+      }
+    });
+  });
 
 app.get('/create_draft', (req, res) => {
   // Render the home.ejs file

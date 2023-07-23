@@ -10,33 +10,36 @@
   </header>
   <section>
     <h2>Article Information</h2>
-    <p>Created: {{ article.createdDate }}</p>
-    <p>Last Modified: {{ article.lastModifiedDate }}</p>
+    <% availableDraft.forEach(function(article) { %>
   </section>
-    <div class="container">
-    <form action="/author/edit/{{ article.id }}" method="POST">
-        <div class="mb-3">
+  <div class="container">
+    <form action="changed-draft" method="POST">
+      <div class="mb-3">
         <label for="articleTitle" class="form-label">Article Title:</label>
-        <input type="text" id="articleTitle" name="articleTitle" class="form-control" value="{{ article.title }}" required>
-        </div>
-        
-        <div class="mb-3">
+        <input type="text" id="articleTitle" name="articleTitle" class="form-control" value="<%= article.title %>" placeholder="<%= article.title %>" required>
+      </div>
+      
+      <div class="mb-3">
         <label for="articleSubtitle" class="form-label">Article Subtitle:</label>
-        <input type="text" id="articleSubtitle" name="articleSubtitle" class="form-control" value="{{ article.subtitle }}" required>
-        </div>
-        
-        <div class="mb-3">
+        <input type="text" id="articleSubtitle" name="articleSubtitle" class="form-control" value="<%= article.subtitle %>" placeholder="<%= article.subtitle %>" required>
+      </div>
+      
+      <div class="mb-3">
         <label for="articleText" class="form-label">Article Text:</label>
-        <textarea id="articleText" name="articleText" class="form-control" rows="8" required>{{ article.text }}</textarea>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Submit Changes</button>
+        <textarea id="articleText" name="articleText" class="form-control" rows="8" required><%= article.content %></textarea>
+      </div>
+
+      <div>
+        <input type="hidden" type="text" name="draftId" value="<%= article.article_id %>"> 
+      </div>
+      <div>
+        <input type="hidden" type="text" name="userId" value="<%= article.user_id %>"> 
+      </div>
+      <% }) %>
+      <button type="submit" class="btn btn-primary">Submit Changes</button>
     </form>
     
     <a href="/author" class="btn btn-secondary mt-3">Back</a>
-    </div>
-
-
+  </div>
 </body>
 </html>
-
