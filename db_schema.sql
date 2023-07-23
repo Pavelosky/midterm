@@ -53,9 +53,11 @@ INSERT INTO Articles ('title','subtitle','content','publication_date', 'user_id'
 INSERT INTO Articles ('title','subtitle','content','publication_date', 'user_id') VALUES('How to make a CRUD website', 'In this post you will find information on how to create a site where you can create, read, update and delete stuff', 'To develop a CRUD website, you will need to select a technology stack, such as Node.js for the backend and Express.js as the framework, along with a database system like MongoDB. Create RESTful API routes in the backend for handling Create, Read, Update, and Delete operations. Design and build frontend templates using HTML, CSS, and JavaScript, offering user interfaces for listing, adding, editing, and deleting data. Implement frontend JavaScript code to interact with the backend API, using fetch or Axios to send requests and update data on the server. Finally, establish the connection between the frontend and backend to enable users to seamlessly perform CRUD operations. Thoroughly test the functionality and ensure security measures are in place to protect against potential vulnerabilities.', DATE('now'), 1);
 INSERT INTO Comments ('article_id','author_name','email','comment','comment_date','user_id') VALUES
                     (1, 'Pablito', 'pablito@pablo.com', 'This makes a lot of sense, best article ever', DATE('now'), 1)
-INSERT INTO Drafts ('title','subtitle','content','publication_date', 'user_id') VALUES('This is a draft article', 'Test draft article', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ', DATE('now'), 1);
+INSERT INTO Drafts ('title','subtitle','content','publication_date', 'user_id') VALUES('Article about making drafts', 'Test draft article', 'it, This is how you delete drafts ', DATE('now'), 1);
 
 COMMIT;
 
 
 
+INSERT INTO Articles (title, subtitle, content, publication_date, user_id)
+SELECT title, subtitle, content, DATE('now'), user_id FROM Drafts WHERE draft_id = 2;
