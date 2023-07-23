@@ -24,11 +24,6 @@ const userRoutes = require('./routes/user');
 //set the app to use ejs for rendering
 app.set('view engine', 'ejs');
 
-// app.get('/', (req, res) => {
-//   // Render the home.ejs file
-//   res.render('home');
-//   })
-
 app.get("/", function (req, res) {
   //searching in the database
   let sqlquery = "SELECT * FROM `Articles`";
@@ -86,9 +81,8 @@ app.get('/article', (req, res) => {
 
 app.get('/authors_page', (req, res) => {
   //searching in the database
-  let word = `%${req.query.keyword}%`;
-  let articlequery = "SELECT * FROM `Articles` WHERE user_id = ?";
-  let draftquery = "SELECT * FROM `Drafts` WHERE user_id = ?";
+  const articlequery = "SELECT * FROM `Articles` WHERE user_id = ?";
+  const draftquery = "SELECT * FROM `Drafts` WHERE user_id = ?";
   
   db.serialize(()=>{
     db.all(articlequery,1, (err, articleResults) => {
@@ -118,6 +112,45 @@ app.get('/authors_page', (req, res) => {
         console.log('Article deleted successfully.');
         res.redirect('/authors_page');
       }
+    });
+  });
+
+  app.post('/delete-draft', (req, res) => {
+    const draftId = req.body.draft_id;
+
+    const sqlQuery = 'DELETE FROM Drafts WHERE draft_id = ?;';
+    db.run(sqlQuery, draftId, (err) => {
+      if (err) {
+        console.error('Error deleting article:', err.message);
+        res.status(500).send('Error deleting article.');
+      } else {
+        console.log('Draft deleted successfully.');
+        res.redirect('/authors_page');
+      }
+    });
+  });
+
+  app.post('/publish-draft', (req, res) => {
+    const draftId = req.body.draft_id;
+    const sqlQuery = 'INSERT INTO Articles (title, subtitle, content, publication_date, user_id) SELECT title, subtitle, content, DATE("now"), user_id FROM Drafts WHERE draft_id = ?;';
+    const deletequery = 'DELETE FROM Drafts WHERE draft_id = ?;';
+
+    db.serialize(()=>{
+      db.run(sqlQuery, draftId, (err) => {
+        if (err) {
+          console.error('Error publishing article:', err.message);
+          res.status(500).send('Error publishing article.');
+        } 
+        db.run(deletequery, draftId, (err) => {
+          if (err) {
+            console.error('Error deleting article:', err.message);
+            res.status(500).send('Error deleteing article.');
+          }else {
+            console.log('Draft published successfully.');
+            res.redirect('/authors_page');
+          };  
+        });
+      });
     });
   });
 

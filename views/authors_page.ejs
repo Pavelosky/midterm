@@ -46,15 +46,39 @@
     <section class="draft-articles mt-4 mb-4">
       <h2>Draft Articles</h2>
       <ul class="list-group">
-        <% draftArticles.forEach(function(article) { %>
+        <% draftArticles.forEach(function(draft) { %>
           <div class="card m-1">
             <li class="list-group-item">
-              <h3><%= article.title %></h3>
-              <p>Subtitle: <%= article.subtitle %></p>
-              <p>Created on: <%= article.publication_date %></p>
-              <button class="btn btn-warning">Edit</button>
-              <button class="btn btn-success">Publish</button>
-              <button class="btn btn-danger">Delete</button>
+              <h3><%= draft.title %></h3>
+              <p>Subtitle: <%= draft.subtitle %></p>
+              <p>Created on: <%= draft.publication_date %></p>
+              <p><%= draft.content.substring(0, 250) + "..." %></p>
+              <div class="d-flex">
+                <form action="/article-id" method="GET">
+                  <div class="pe-2">
+                    <input type="hidden" name="id" value="<%= draft.draft_id%>"> 
+                    <button type="submit" class="btn btn-primary">Read</button>
+                  </div>
+                </form>
+                <form action="/article-id" method="GET">
+                  <div class="pe-2">
+                    <input type="hidden" name="id" value="<%= draft.draft_id%>"> 
+                    <button type="submit" class="btn btn-warning">Edit</button>
+                  </div>
+                </form>
+                <form action="/publish-draft" method="POST">
+                  <div class="pe-2">
+                    <input type="hidden" name="draft_id" value="<%= draft.draft_id%>"> 
+                    <button type="submit" class="btn btn-success">Publish</button>
+                  </div>
+                </form>
+                <form action="/delete-draft" method="POST">
+                  <div class="pe-2">
+                    <input type="hidden" name="draft_id" value="<%= draft.draft_id%>"> 
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </div>
+                </form>
+              </div>
             </li>
           </div>
         <% }) %>
