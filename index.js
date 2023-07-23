@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
-const port = 3000;
+const port = 3100;
 const sqlite3 = require('sqlite3').verbose();
+
+const Service = require('./Service/Serice');
+global.Service = Service;
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -20,58 +23,18 @@ global.db = new sqlite3.Database('./database.db',function(err){
 
 
 const userRoutes = require('./routes/user');
+const articleRoutes = require('./routes/articles');
 
 //set the app to use ejs for rendering
 app.set('view engine', 'ejs');
 
 app.get("/", function (req, res) {
-  //searching in the database
-  let sqlquery = "SELECT * FROM `Articles`";
-  // execute sql query
-  db.all(sqlquery, (err, result) => {
-    if (err) {
-      return console.error("No articles "
-      + req.query.keyword + " error: "+ err.message);
-      }else{
-      res.render ('home',{availableArticles:result});
-    }
-  });
+
+  Service.get(Service.ARTICLES).getAllArticles()
+    .then((availableArticles) => {
+      res.render ('Home/home',{availableArticles});
+    });
 });
-
-  app.post("/home", function (req,res) {
-    // saving data in database
-    console.log(req.body)
-    let sqlquery = "INSERT INTO Users (username, password, email, is_author) VALUES (?,?,?,?)";
-    // execute sql query
-    let newrecord = [req.body.username, req.body.password, req.body.email, req.body.is_author];
-    db.run(sqlquery, newrecord, (err, result) => {
-      if (err) {
-      return console.error(err.message);
-      }else
-      res.send("Your account has been created, <br> <b>Username:</b> "+ req.body.username + "<br><b> Password: </b>"+ req.body.password +" <br><b> email: </b>"+ req.body.email +
-      "<br><b>Author:</b> "+ req.body.is_author)
-      });
-    });
-
-  app.post('/submit-comment', (req, res) => {
-    const articleId = req.body.article_id;
-    const authorName = req.body.author_name;
-    const email = req.body.email;
-    const commentText = req.body.comment;
-
-    const sqlQuery = 'INSERT INTO Comments (article_id, author_name, email, comment, comment_date) VALUES (?, ?, ?, ?, DATE("now"))';
-    const values = [articleId, authorName, email, commentText];
-    console.log(values)
-    db.run(sqlQuery, values, (err) => {
-      if (err) {
-        console.error('Error inserting comment:', err.message);
-        res.status(500).send('Error submitting comment.');
-      } else {
-        console.log('Comment inserted successfully.');
-        res.redirect('/article-id?id=' + articleId);
-      }
-    });
-  });
 
 
 app.get('/authors_page', (req, res) => {
@@ -150,7 +113,7 @@ app.get('/authors_page', (req, res) => {
   });
 
 app.get('/authors_settings', (req, res) => {
-  // Render the home.ejs file
+  // Render the home.js.ejs file
   res.render('authors_settings');
 })
 
@@ -184,7 +147,7 @@ app.get('/edit_draft', (req, res) => {
   });
 
 app.get('/create_draft', (req, res) => {
-  // Render the home.ejs file
+  // Render the home.js.ejs file
   res.render('create_draft');
 })
 
@@ -220,29 +183,13 @@ app.get("/search-result-db", function (req, res) {
   });
 });
 
-app.get("/article-id", function (req, res) {
-  //searching in the database
-  let id = `${req.query.id}`;
-  let sqlquery = "SELECT * FROM `Articles` WHERE article_id = ?;";
-  let commentquery = "SELECT * FROM Comments WHERE article_id = ?;"
 
-  db.serialize(() => {
-    db.all(sqlquery, id, (err, articleResults) => {
-      if (err) {
-        return console.error("Error fetching article data: " + err.message);
-      } 
-      db.all(commentquery, id, (err, commentResults) => {
-        if (err) {
-          return console.error("Error fetching comment data: " + err.message);
-        }
-        res.render('article', { article: articleResults, comments: commentResults });
-      });
-    });
-  });
-});
+// this adds all the userRoutes to the app under the path /user
+app.use('/users', userRoutes);
 
-//this adds all the userRoutes to the app under the path /user
-app.use('/user', userRoutes);
+app.use('/articles', articleRoutes);
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

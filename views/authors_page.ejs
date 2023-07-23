@@ -17,7 +17,7 @@
 
   <main class="container">
     <section class="published-articles mt-4 mb-4">
-      <h2>Published Articles</h2>
+      <h2>Published Article</h2>
       <ul class="list-group">
         <% publishedArticles.forEach(function(article) { %>
           <div class="card m-1">
@@ -28,12 +28,16 @@
               <p><%= article.content.substring(0, 250) + "..." %></p>
               <p>Likes: <%= article.likes %></p>
               <div class="d-flex">
-                <form action="/article-id" method="GET">
+                <!--<form action="/article-id" method="GET">
                   <div class="pe-2">
                     <input type="hidden" name="id" value="<%= article.article_id %>"> 
                     <button type="submit" class="btn btn-primary">Read more</button>
                   </div>
-                </form>
+                </form>-->
+
+                <a href="/articles/article/<%= article.article_id %>">Read more</a>
+
+
                 <form action="/delete-article" method="POST">
                   <div class="pe-2">
                     <input type="hidden" name="article_id" value="<%= article.article_id %>"> 
@@ -48,7 +52,7 @@
     </section>
 
     <section class="draft-articles mt-4 mb-4">
-      <h2>Draft Articles</h2>
+      <h2>Draft Article</h2>
       <ul class="list-group">
         <% draftArticles.forEach(function(draft) { %>
           <div class="card m-1">
@@ -58,12 +62,14 @@
               <p>Created on: <%= draft.publication_date %></p>
               <p><%= draft.content.substring(0, 250) + "..." %></p>
               <div class="d-flex">
-                <form action="/article-id" method="GET">
+                <!--<form action="/article-id" method="GET">
                   <div class="pe-2">
                     <input type="hidden" name="id" value="<%= draft.draft_id%>"> 
                     <button type="submit" class="btn btn-primary">Read</button>
                   </div>
-                </form>
+                </form>-->
+                <a href="/articles/article/<%= article.article_id %>">Read more</a>
+
                 <form action="/edit_draft" method="GET">
                   <div class="pe-2">
                     <input type="hidden" name="id" value="<%= draft.draft_id%>"> 

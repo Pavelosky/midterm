@@ -7,22 +7,22 @@
 <body>
   <header class="container mt-4 mb-4">
     <ul class="list-group">
-      <% article.forEach(function(article) { %>
-        <li class="list-group-item">
-          <h1 class="display-4"><%= article.title %></h1>
-          <h2><%= article.subtitle %></h2>
-          <p>Published on <b><%= article.publication_date %></b></p>
-          <p>Likes: <%= article.likes %></p>
-        </li>
 
-        <div class="card mt-2">
-          <div class="card-body m-2">
-            <article>
-              <p><%= article.content %></p>
-            </article>
-          </div>
+      <li class="list-group-item">
+        <h1 class="display-4">T1 <%= article.title %></h1>
+        <h2><%= article.subtitle %></h2>
+        <p>Published on <b><%= article.publication_date %></b></p>
+        <p>Likes: <%= article.likes %></p>
+      </li>
+
+      <div class="card mt-2">
+        <div class="card-body m-2">
+          <article>
+            <p><%= article.content %></p>
+          </article>
         </div>
-      <% }) %>
+      </div>
+
     </ul>
   </header>
   <main class="container">
@@ -30,7 +30,7 @@
 
     <div class="col-md-6">
       <h2>Add a Comment</h2>
-      <form action="/submit-comment" method="POST">
+      <form action="/articles/article/<%= article.article_id %>/comment" method="POST">
         <input type="hidden" name="article_id" id="article_id_input">
         <div class="form-group">
           <label for="author_name">Your Name:</label>
@@ -66,14 +66,13 @@
 
     <!-- Script below was written by my friend -->
     <script>
-      const articleIds = <%= JSON.stringify(article.map(a => a.article_id)) %>;
       const commentForm = document.querySelector('form');
       const articleIdInput = document.getElementById('article_id_input');
-  
+
       commentForm.addEventListener('submit', (event) => {
         // Get the current article_id associated with the comment form
-        const currentArticleId = articleIds[0]; // You can modify this depending on your logic
-  
+        const currentArticleId = '<%= article.article_id %>'; // You can modify this depending on your logic
+
         // Set the value of the article_id input field with the current article_id
         articleIdInput.value = currentArticleId;
       });

@@ -24,7 +24,7 @@
           </form>
         </div >
         <div class="mt-4 m-3">
-          <h2>Articles List</h2>
+          <h2>Article List</h2>
             <ul class="list-group">
               <% availableArticles.forEach(function(article) { %>
                 <div class="card m-1">
@@ -32,13 +32,14 @@
                     <h3><%= article.title %></h3>
                     <p>Published on: <b><%= article.publication_date %></b></p>
                     <p><%= article.content.substring(0, 250) + "..." %></p>
-                    <p>Author: <b><%= article.author %></b></p>
-                    <form action="/article-id" method="GET">
+                    <p>Author: <a href=""><b><%= article.author_name %></b></a></p>
+                    <!--<form action="/article-id" method="GET">
                       <div>
                         <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
                         <button type="submit" class="btn btn-primary">Read more</button>
                       </div>
-                    </form>
+                    </form>-->
+                    <a href="/articles/article/<%= article.article_id %>">Read more</a>
                     
                   </li>
                 </div>
@@ -51,7 +52,7 @@
       <div class="col-md-3">
         <h2>Sign up</h2>
         
-        <form method="POST" action="/home">
+        <form method="POST" action="/users/create">
           <div class="mb-3">
             <label for="username">Your username</label>
             <input id="username" type="text" name="username" value="" class="form-control">
