@@ -100,13 +100,24 @@ app.get('/authors_page', (req, res) => {
           if (err) {
             return console.error("Error fetching comment data: " + err.message);
           }
-          console.log("Article result:");
-          console.log(articleResults);
-          console.log("Comment result:");
-          console.log(draftResults);
           res.render('authors_page', {publishedArticles:articleResults, draftArticles: draftResults });
         });
       })
+    });
+  });
+  
+  app.post('/delete-article', (req, res) => {
+    const articleId = req.body.article_id;
+
+    const sqlQuery = 'DELETE FROM Articles WHERE article_id = ?;';
+    db.run(sqlQuery, articleId, (err) => {
+      if (err) {
+        console.error('Error deleting article:', err.message);
+        res.status(500).send('Error deleting article.');
+      } else {
+        console.log('Article deleted successfully.');
+        res.redirect('/authors_page');
+      }
     });
   });
 

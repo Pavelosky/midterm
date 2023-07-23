@@ -17,13 +17,13 @@
               <h3><%= article.title %></h3>
               <p>Published on: <b><%= article.publication_date %></b></p>
               <p><%= article.content.substring(0, 250) + "..." %></p>
+              <p>Author: <b><%= article.author %></b></p>
               <form action="/article-id" method="GET">
                 <div>
                   <input type="hidden" type="text" name="id" value="<%= article.article_id %>"> 
                   <button type="submit" class="btn btn-primary">Read more</button>
                 </div>
               </form>
-              <p>Author: <b><%= article.author %></b></p>
             </li>
           </div>
         <% }) %>

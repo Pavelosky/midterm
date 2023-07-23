@@ -6,9 +6,9 @@
 </head>
 <body>
   <header class="container mt-4 mb-4">
-    <h1>PAwel - Author Home Page</h1>
-    <a href="/author/settings">Settings</a>
-    <button class="btn btn-primary" onclick="createNewDraft()">Create new draft</button>
+    <h1>Pawel - Author Home Page</h1>
+    <button href="/author/settings" class="btn btn-warning" onclick="createNewDraft()">Settings</button>
+    <button class="btn btn-info">Create new draft</button>
   </header>
   <main class="container">
 
@@ -30,11 +30,13 @@
                     <button type="submit" class="btn btn-primary">Read more</button>
                   </div>
                 </form>
-                <div class="ml-2"> <!-- You can adjust the margin as needed -->
-                  <button class="btn btn-danger" onclick="deleteArticle('<%= article.id %>')">Delete</button>
-                </div>
+                <form action="/delete-article" method="POST">
+                  <div class="pe-2">
+                    <input type="hidden" name="article_id" value="<%= article.article_id %>"> 
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </div>
+                </form>
               </div>
-              
             </li>
           </div> 
         <% }) %>
@@ -50,9 +52,9 @@
               <h3><%= article.title %></h3>
               <p>Subtitle: <%= article.subtitle %></p>
               <p>Created on: <%= article.publication_date %></p>
-              <a href="/author/edit/<%= article.id %>">Edit Article</a>
-              <button class="btn btn-success" onclick="publishArticle('<%= article.id %>')">Publish</button>
-              <button class="btn btn-danger" onclick="deleteArticle('<%= article.id %>')">Delete</button>
+              <button class="btn btn-warning">Edit</button>
+              <button class="btn btn-success">Publish</button>
+              <button class="btn btn-danger">Delete</button>
             </li>
           </div>
         <% }) %>
