@@ -49,7 +49,7 @@ app.get("/", function (req, res) {
       return console.error(err.message);
       }else
       res.send("Your account has been created, <br> <b>Username:</b> "+ req.body.username + "<br><b> Password: </b>"+ req.body.password +" <br><b> email: </b>"+ req.body.email +
-      "<br><b>Author:</b> "+ req.body.is_author)
+      "<br><b>Author:</b> "+ req.body.is_author + "<br> <a href='/' class='btn btn-secondary mt-3'>Go Back</a>")
       });
     });
 
