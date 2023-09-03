@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add customer and work location</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+    <body>
+        <form method="POST" action="/createCustomerAndWorkLocation">
+            <div class="mb-3">
+            <label for="customer_name">Customer name</label>
+            <input id="customer_name" type="text" name="customer_name" value="" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="customer_integration_id">Customer integration id</label>
+            <input id="customer_integration_id" type="text" name="customer_integration_id" value="" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="work_location_name">Work location name</label>
+            <input id="work_location_name" type="text" name="work_location_name" value="" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="street">Street</label>
+            <input id="street" type="text" name="street" value="" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="number">Number</label>
+            <input id="number" type="text" name="number" value="" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="postcode">Postcode</label>
+            <input id="postcode" type="text" name="postcode" value="" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="city">City</label>
+            <input id="city" type="text" name="city" value="" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </body>
+</html>
