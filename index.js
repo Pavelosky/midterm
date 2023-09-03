@@ -184,6 +184,74 @@ app.get("/search-result-db", function (req, res) {
 });
 
 
+
+
+app.get('/add_customer', (req, res) => {
+  // Render the home.js.ejs file
+  res.render('add_customer');
+})
+
+
+
+
+// Define a route to handle the transaction
+app.post('/createCustomerAndWorkLocation', (req, res) => {
+  const customerData = {
+    customer_name: req.body.customer_name,
+    customer_integration_id: req.body.customer_integration_id
+  };
+
+  const workLocationData = {
+    work_location_name: req.body.work_location_name,
+    street: req.body.street,
+    number: req.body.number,
+    postcode: req.body.postcode,
+    city: req.body.city,
+  };
+
+  // Start a transaction
+  db.run('BEGIN', (err) => {
+    if (err) {
+      res.status(500).send('Error starting the transaction');
+      return;
+    }
+
+    // Insert customer data
+    db.run('INSERT INTO customers (customer_name, customer_integration_id) VALUES (?, ?)', [customerData.customer_name, customerData.customer_integration_id], function (err) {
+      if (err) {
+        db.run('ROLLBACK'); // Rollback the transaction on error
+        res.status(500).send('Error inserting customer data');
+        return;
+      }
+
+      const customerId = this.lastID;
+
+      // Insert work location data
+      db.run('INSERT INTO customers (parent_id, customer_name, work_location_name, street, number, postcode, city) VALUES (?, ?, ?, ?, ?, ?, ?)', [customerId, customerData.customer_name, workLocationData.work_location_name, workLocationData.street, workLocationData.number, workLocationData.postcode, workLocationData.city], function (err) {
+        if (err) {
+          db.run('ROLLBACK'); // Rollback the transaction on error
+          res.status(500).send('Error inserting work location data');
+          return;
+        }
+
+        // Commit the transaction if both queries were successful
+        db.run('COMMIT', (err) => {
+          if (err) {
+            res.status(500).send('Error committing the transaction');
+          } else {
+            console.log('Transaction completed successfully.');
+            res.send('Transaction completed successfully.');
+          }
+        });
+      });
+    });
+  });
+});
+
+
+
+
+
 // this adds all the userRoutes to the app under the path /user
 app.use('/users', userRoutes);
 

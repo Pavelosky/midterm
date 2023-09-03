@@ -63,19 +63,35 @@
       <a href="/" class="btn btn-danger mt-4">Back to home</a>
     </div>
   </main>
-
-    <!-- Script below was written by my friend -->
     <script>
       const commentForm = document.querySelector('form');
       const articleIdInput = document.getElementById('article_id_input');
-
+    
       commentForm.addEventListener('submit', (event) => {
         // Get the current article_id associated with the comment form
         const currentArticleId = '<%= article.article_id %>'; // You can modify this depending on your logic
-
+    
         // Set the value of the article_id input field with the current article_id
         articleIdInput.value = currentArticleId;
       });
     </script>
 </body>
 </html>
+
+
+
+
+
+    <!-- Script below was written by my friend -->
+    <!-- <script>
+      const customerForm = document.querySelector('form');
+      const adminName = document.getElementById('admin_name');
+
+      inputForm.addEventListener('submit', (event) => {
+        
+        const currentAdminName = '<%= admin.<TU WPISZ NAME TEGO INPUTU I ZRÓB TEGO GITA>%>'; 
+
+// 
+        adminName.value = currentAdminName;
+      });
+    </script> -->

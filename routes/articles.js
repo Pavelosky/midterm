@@ -46,3 +46,22 @@ router.post('/article/:id/comment', (req, res, next) => {
 
 
 module.exports = router;
+
+
+
+
+// router.get('/article/:id', (req, res, next) => {
+
+//   const articleId = req.params.id;
+
+//   const ArticleService = Service.get(Service.ARTICLES);
+
+//   ArticleService.getArticleById(articleId)
+//     .then((article) => {
+//       console.log('article', article);
+//       ArticleService.getArticleComments(articleId)
+//         .then((comments) => {
+//           res.render('Articles/article', { article, comments: comments });
+//         });
+//     });
+// });
